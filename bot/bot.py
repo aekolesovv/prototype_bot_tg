@@ -5,6 +5,8 @@ import asyncio
 import os
 import aiohttp
 import json
+from .notification_service import NotificationService
+from db.repositories import UserRepository
 
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', 'YOUR_BOT_TOKEN_HERE')
 BACKEND_URL = os.getenv('BACKEND_URL', 'http://localhost:8000/api/v1')
@@ -30,7 +32,8 @@ def get_main_keyboard():
             [KeyboardButton(text='Открыть мини-приложение', web_app=WebAppInfo(url='https://your-webapp-url.com'))],
             [KeyboardButton(text='Связаться с куратором / преподавателем')],
             [KeyboardButton(text='Информация о курсах и школе')],
-            [KeyboardButton(text='Изменить уровень обучения')]
+            [KeyboardButton(text='Изменить уровень обучения')],
+            [KeyboardButton(text='🔔 Уведомления')]
         ],
         resize_keyboard=True
     )
@@ -39,6 +42,16 @@ def get_main_keyboard():
 async def cmd_start(message: types.Message):
     user_id = message.from_user.id
     user_states[user_id] = {'level': None}
+    
+    # Создаем или получаем пользователя из БД
+    user = UserRepository.get_by_telegram_id(str(user_id))
+    if not user:
+        user = UserRepository.create_user(
+            str(user_id),
+            message.from_user.username,
+            message.from_user.first_name,
+            message.from_user.last_name
+        )
     
     await message.answer(
         'Добро пожаловать в школу английского языка! 🎓\n\n'
@@ -120,10 +133,56 @@ async def cmd_schedule(message: types.Message):
     
     await message.answer(schedule_text)
 
+@dp.message(Command('notifications'))
+async def cmd_notifications(message: types.Message):
+    user_id = message.from_user.id
+    
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'{BACKEND_URL}/notifications?user_id={user_id}') as response:
+                if response.status == 200:
+                    data = await response.json()
+                    notifications = data.get('notifications', [])
+                    unread_count = data.get('unread_count', 0)
+                    
+                    if not notifications:
+                        await message.answer("🔔 У вас пока нет уведомлений")
+                        return
+                    
+                    # Показываем последние 5 уведомлений
+                    recent_notifications = notifications[:5]
+                    notification_text = f"🔔 Ваши уведомления ({unread_count} непрочитанных):\n\n"
+                    
+                    for notification in recent_notifications:
+                        status = "🔴" if not notification["is_read"] else "⚪"
+                        notification_text += f"{status} {notification['title']}\n"
+                        notification_text += f"   {notification['message']}\n\n"
+                    
+                    if len(notifications) > 5:
+                        notification_text += f"... и еще {len(notifications) - 5} уведомлений"
+                    
+                    # Создаем inline кнопки для управления уведомлениями
+                    keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+                        [types.InlineKeyboardButton(text="📋 Все уведомления", callback_data="all_notifications")],
+                        [types.InlineKeyboardButton(text="✅ Отметить все прочитанными", callback_data="mark_all_read")],
+                        [types.InlineKeyboardButton(text="⚙️ Настройки уведомлений", callback_data="notification_settings")]
+                    ])
+                    
+                    await message.answer(notification_text, reply_markup=keyboard)
+                else:
+                    await message.answer("❌ Не удалось загрузить уведомления")
+    except:
+        await message.answer("❌ Ошибка соединения с сервером")
+
 @dp.message(lambda message: message.text == 'Начальный уровень')
 async def handle_beginner_level(message: types.Message):
     user_id = message.from_user.id
     user_states[user_id] = {'level': 'beginner'}
+    
+    # Обновляем уровень в БД
+    user = UserRepository.get_by_telegram_id(str(user_id))
+    if user:
+        UserRepository.update_user_level(user.id, 'beginner')
     
     await message.answer(
         '✅ Выбран начальный уровень обучения!\n\n'
@@ -139,6 +198,11 @@ async def handle_beginner_level(message: types.Message):
 async def handle_advanced_level(message: types.Message):
     user_id = message.from_user.id
     user_states[user_id] = {'level': 'advanced'}
+    
+    # Обновляем уровень в БД
+    user = UserRepository.get_by_telegram_id(str(user_id))
+    if user:
+        UserRepository.update_user_level(user.id, 'advanced')
     
     await message.answer(
         '✅ Выбран продвинутый уровень обучения!\n\n'
@@ -205,6 +269,100 @@ async def handle_change_level(message: types.Message):
         reply_markup=get_level_keyboard()
     )
 
+@dp.message(lambda message: message.text == '🔔 Уведомления')
+async def handle_notifications_button(message: types.Message):
+    await cmd_notifications(message)
+
+@dp.callback_query(lambda c: c.data == "all_notifications")
+async def show_all_notifications(callback_query: types.CallbackQuery):
+    user_id = callback_query.from_user.id
+    
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'{BACKEND_URL}/notifications?user_id={user_id}') as response:
+                if response.status == 200:
+                    data = await response.json()
+                    notifications = data.get('notifications', [])
+                    
+                    if not notifications:
+                        await callback_query.message.edit_text("🔔 У вас пока нет уведомлений")
+                        return
+                    
+                    notification_text = "🔔 Все ваши уведомления:\n\n"
+                    
+                    for i, notification in enumerate(notifications, 1):
+                        status = "🔴" if not notification["is_read"] else "⚪"
+                        date = notification["created_at"][:10] if notification["created_at"] else ""
+                        notification_text += f"{i}. {status} {notification['title']}\n"
+                        notification_text += f"   {notification['message']}\n"
+                        notification_text += f"   📅 {date}\n\n"
+                    
+                    await callback_query.message.edit_text(notification_text)
+                else:
+                    await callback_query.answer("❌ Не удалось загрузить уведомления")
+    except:
+        await callback_query.answer("❌ Ошибка соединения с сервером")
+
+@dp.callback_query(lambda c: c.data == "mark_all_read")
+async def mark_all_notifications_read(callback_query: types.CallbackQuery):
+    user_id = callback_query.from_user.id
+    
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(f'{BACKEND_URL}/notifications/read-all?user_id={user_id}') as response:
+                if response.status == 200:
+                    await callback_query.answer("✅ Все уведомления отмечены как прочитанные")
+                    await callback_query.message.edit_text("✅ Все уведомления отмечены как прочитанные")
+                else:
+                    await callback_query.answer("❌ Не удалось обновить уведомления")
+    except:
+        await callback_query.answer("❌ Ошибка соединения с сервером")
+
+@dp.callback_query(lambda c: c.data == "notification_settings")
+async def show_notification_settings(callback_query: types.CallbackQuery):
+    user_id = callback_query.from_user.id
+    
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'{BACKEND_URL}/notifications/settings?user_id={user_id}') as response:
+                if response.status == 200:
+                    settings = await response.json()
+                    
+                    settings_text = "⚙️ Настройки уведомлений:\n\n"
+                    settings_text += f"📚 Напоминания о занятиях: {'✅' if settings['lesson_reminders'] else '❌'}\n"
+                    settings_text += f"📝 Уведомления о тестах: {'✅' if settings['test_notifications'] else '❌'}\n"
+                    settings_text += f"👥 Напоминания о клубах: {'✅' if settings['club_reminders'] else '❌'}\n"
+                    settings_text += f"💪 Ежедневная мотивация: {'✅' if settings['daily_motivation'] else '❌'}\n"
+                    settings_text += f"⏰ Время напоминаний: {settings['reminder_time']}\n"
+                    
+                    keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+                        [types.InlineKeyboardButton(text="🔧 Изменить настройки", callback_data="edit_notification_settings")]
+                    ])
+                    
+                    await callback_query.message.edit_text(settings_text, reply_markup=keyboard)
+                else:
+                    await callback_query.answer("❌ Не удалось загрузить настройки")
+    except:
+        await callback_query.answer("❌ Ошибка соединения с сервером")
+
+@dp.callback_query(lambda c: c.data == "edit_notification_settings")
+async def edit_notification_settings(callback_query: types.CallbackQuery):
+    user_id = callback_query.from_user.id
+    
+    # Создаем inline кнопки для переключения настроек
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+        [types.InlineKeyboardButton(text="📚 Напоминания о занятиях", callback_data="toggle_lesson_reminders")],
+        [types.InlineKeyboardButton(text="📝 Уведомления о тестах", callback_data="toggle_test_notifications")],
+        [types.InlineKeyboardButton(text="👥 Напоминания о клубах", callback_data="toggle_club_reminders")],
+        [types.InlineKeyboardButton(text="💪 Ежедневная мотивация", callback_data="toggle_daily_motivation")],
+        [types.InlineKeyboardButton(text="⏰ Изменить время", callback_data="change_reminder_time")]
+    ])
+    
+    await callback_query.message.edit_text(
+        "🔧 Выберите настройку для изменения:",
+        reply_markup=keyboard
+    )
+
 @dp.message()
 async def handle_unknown(message: types.Message):
     await message.answer(
@@ -213,8 +371,22 @@ async def handle_unknown(message: types.Message):
     )
 
 async def main():
-    print("🤖 Telegram bot starting...")
-    await dp.start_polling(bot)
+    # Запускаем сервис уведомлений
+    notification_service = NotificationService(bot)
+    
+    try:
+        # Запускаем сервис уведомлений в фоне
+        notification_task = asyncio.create_task(notification_service.start())
+        
+        # Запускаем бота
+        await dp.start_polling(bot)
+    except KeyboardInterrupt:
+        print("Остановка бота...")
+    finally:
+        # Останавливаем сервис уведомлений
+        await notification_service.stop()
+        if 'notification_task' in locals():
+            notification_task.cancel()
 
 if __name__ == '__main__':
     asyncio.run(main())

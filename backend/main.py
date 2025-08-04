@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import router
+from .routes_db import router
+from db.init_db import init_db, create_sample_data
 
 app = FastAPI(
     title="English School API",
@@ -16,6 +17,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.on_event("startup")
+async def startup_event():
+    """Инициализация базы данных при запуске"""
+    print("🚀 Инициализация базы данных...")
+    init_db()
+    print("✅ База данных готова!")
+    
+    # Создаем образцы данных только если база пустая
+    try:
+        create_sample_data()
+        print("✅ Образцы данных созданы!")
+    except Exception as e:
+        print(f"ℹ️ Образцы данных уже существуют: {e}")
 
 @app.get('/ping')
 def ping():

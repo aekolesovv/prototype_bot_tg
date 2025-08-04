@@ -1,0 +1,68 @@
+/* Цветовая палитра для English School Web App */
+
+:root {
+  /* Основные цвета */
+  --cherry-primary: #8b2635;      /* Бордовый основной */
+  --cherry-dark: #6a1b26;         /* Темный бордовый */
+  --cherry-light: #a34a5a;        /* Светлый бордовый */
+  
+  /* Кремовые тона */
+  --cream-primary: #fef7f0;       /* Основной кремовый */
+  --cream-light: #ffffff;         /* Светлый кремовый */
+  --cream-dark: #f5e6d3;         /* Темный кремовый */
+  --cream-accent: #e8d5c4;       /* Кремовый акцент */
+  
+  /* Нежно-розовые тона */
+  --pink-light: #e8b4b8;         /* Нежно-розовый */
+  --pink-pale: #f8e8e8;          /* Бледно-розовый */
+  --pink-warm: #fff0e6;          /* Теплый розовый */
+  
+  /* Дополнительные цвета */
+  --brown-warm: #d4a574;         /* Теплый коричневый */
+  --brown-dark: #8b6f47;         /* Темный коричневый */
+  --brown-light: #b8946f;        /* Светлый коричневый */
+  
+  /* Текст */
+  --text-primary: #2c1810;       /* Основной текст */
+  --text-secondary: #8b6f47;     /* Вторичный текст */
+  --text-light: #ffffff;         /* Светлый текст */
+  
+  /* Фоны */
+  --bg-primary: #fef7f0;         /* Основной фон */
+  --bg-secondary: #ffffff;       /* Вторичный фон */
+  --bg-dark: #2c1810;           /* Темный фон */
+  
+  /* Границы и тени */
+  --border-light: #e8d5c4;       /* Светлая граница */
+  --border-dark: #4a2c1a;        /* Темная граница */
+  --shadow-color: rgba(139, 38, 53, 0.1); /* Цвет тени */
+}
+
+/* Утилитарные классы для цветов */
+.text-cherry { color: var(--cherry-primary); }
+.text-cream { color: var(--cream-primary); }
+.text-pink { color: var(--pink-light); }
+.text-brown { color: var(--brown-warm); }
+
+.bg-cherry { background-color: var(--cherry-primary); }
+.bg-cream { background-color: var(--cream-primary); }
+.bg-pink { background-color: var(--pink-light); }
+.bg-brown { background-color: var(--brown-warm); }
+
+.border-cherry { border-color: var(--cherry-primary); }
+.border-cream { border-color: var(--cream-accent); }
+.border-pink { border-color: var(--pink-light); }
+.border-brown { border-color: var(--brown-warm); }
+
+/* Градиенты */
+.gradient-cherry {
+  background: linear-gradient(90deg, var(--cherry-primary), var(--cherry-light));
+}
+
+.gradient-warm {
+  background: linear-gradient(90deg, var(--cherry-primary), var(--brown-warm));
+}
+
+.gradient-soft {
+  background: linear-gradient(90deg, var(--pink-light), var(--cream-accent));
+} 

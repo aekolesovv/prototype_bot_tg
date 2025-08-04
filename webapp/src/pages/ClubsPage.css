@@ -1,0 +1,240 @@
+.clubs-page {
+  padding: 20px 16px 80px;
+  min-height: 100vh;
+  background: var(--tg-theme-bg-color, #fef7f0);
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.clubs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.club-card {
+  background: var(--tg-theme-bg-color, #ffffff);
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(139, 38, 53, 0.1);
+}
+
+.club-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(139, 38, 53, 0.15);
+}
+
+.club-card.selected {
+  border-color: var(--tg-theme-button-color, #8b2635);
+  background: var(--tg-theme-bg-color, #fef7f0);
+  box-shadow: 0 4px 16px rgba(139, 38, 53, 0.2);
+}
+
+.club-card.joined {
+  border-color: #27ae60;
+  background: #f8fff8;
+}
+
+.club-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.club-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--tg-theme-text-color, #2c1810);
+  flex: 1;
+  margin-right: 12px;
+}
+
+.availability-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+  background: #e8f5e8;
+  color: #27ae60;
+}
+
+.availability-badge.joined {
+  background: #27ae60;
+  color: #ffffff;
+}
+
+.club-description {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+  margin: 0 0 16px;
+  line-height: 1.4;
+}
+
+.club-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.detail-text {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+}
+
+.progress-container {
+  margin-bottom: 16px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--tg-theme-hint-color, #e8d5c4);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 12px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+  text-align: center;
+  display: block;
+}
+
+.join-info {
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--tg-theme-button-color, #8b2635);
+  color: var(--tg-theme-button-text-color, #ffffff);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.join-info p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.joined-info {
+  margin-top: 16px;
+  padding: 12px;
+  background: #27ae60;
+  color: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.joined-info p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+}
+
+.empty-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 16px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+}
+
+/* Адаптивность */
+@media (max-width: 360px) {
+  .clubs-page {
+    padding: 16px 12px 80px;
+  }
+  
+  .header h1 {
+    font-size: 20px;
+  }
+  
+  .club-card {
+    padding: 16px;
+  }
+  
+  .club-title {
+    font-size: 16px;
+  }
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+  .clubs-page {
+    background: var(--tg-theme-bg-color, #2c1810);
+  }
+  
+  .club-card {
+    background: var(--tg-theme-bg-color, #3d2418);
+    border-color: var(--tg-theme-hint-color, #4a2c1a);
+  }
+  
+  .club-card.selected {
+    background: var(--tg-theme-bg-color, #2c1810);
+  }
+  
+  .club-card.joined {
+    background: #1a2e1a;
+  }
+} 

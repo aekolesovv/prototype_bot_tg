@@ -1,0 +1,363 @@
+.profile-page {
+  padding: 20px 16px 80px;
+  min-height: 100vh;
+  background: var(--tg-theme-bg-color, #fef7f0);
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-card {
+  background: var(--tg-theme-bg-color, #ffffff);
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(139, 38, 53, 0.1);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+/* Основная информация */
+.avatar-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  background: var(--tg-theme-button-color, #8b2635);
+  color: var(--tg-theme-button-text-color, #ffffff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.user-username {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+  margin: 0 0 8px;
+}
+
+.level-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--tg-theme-button-color, #8b2635);
+  color: var(--tg-theme-button-text-color, #ffffff);
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Статистика */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 16px;
+  background: var(--tg-theme-bg-color, #fef7f0);
+  border-radius: 12px;
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+}
+
+.stat-number {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--tg-theme-button-color, #8b2635);
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+  font-weight: 500;
+}
+
+/* Прогресс */
+.progress-section {
+  margin-top: 16px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.progress-label {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+}
+
+.progress-percentage {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: var(--tg-theme-hint-color, #e8d5c4);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+/* Достижения */
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--tg-theme-bg-color, #fef7f0);
+  border-radius: 8px;
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+}
+
+.achievement-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.achievement-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.achievement-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.achievement-date {
+  font-size: 12px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+}
+
+/* Информация о курсе */
+.course-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.detail-icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.detail-text {
+  font-size: 14px;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+/* Цели */
+.goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.goal-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--tg-theme-bg-color, #fef7f0);
+  border-radius: 8px;
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+}
+
+.goal-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.goal-text {
+  font-size: 14px;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+/* Пустые состояния */
+.empty-achievements,
+.empty-goals {
+  text-align: center;
+  padding: 20px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+}
+
+.empty-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.empty-achievements p,
+.empty-goals p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Состояния загрузки и ошибок */
+.loading,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  text-align: center;
+  color: var(--tg-theme-hint-color, #8b6f47);
+}
+
+.error-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.loading {
+  font-size: 16px;
+}
+
+.error-state p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Адаптивность */
+@media (max-width: 360px) {
+  .profile-page {
+    padding: 16px 12px 80px;
+  }
+  
+  .header h1 {
+    font-size: 20px;
+  }
+  
+  .profile-card {
+    padding: 16px;
+  }
+  
+  .card-title {
+    font-size: 16px;
+  }
+  
+  .avatar {
+    width: 56px;
+    height: 56px;
+    font-size: 20px;
+  }
+  
+  .user-name {
+    font-size: 18px;
+  }
+  
+  .stats-grid {
+    gap: 12px;
+  }
+  
+  .stat-item {
+    padding: 12px;
+  }
+  
+  .stat-number {
+    font-size: 20px;
+  }
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+  .profile-page {
+    background: var(--tg-theme-bg-color, #2c1810);
+  }
+  
+  .profile-card {
+    background: var(--tg-theme-bg-color, #3d2418);
+    border-color: var(--tg-theme-hint-color, #4a2c1a);
+  }
+  
+  .stat-item {
+    background: var(--tg-theme-bg-color, #2c1810);
+    border-color: var(--tg-theme-hint-color, #4a2c1a);
+  }
+  
+  .achievement-item,
+  .goal-item {
+    background: var(--tg-theme-bg-color, #2c1810);
+    border-color: var(--tg-theme-hint-color, #4a2c1a);
+  }
+} 

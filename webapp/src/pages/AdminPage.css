@@ -1,0 +1,331 @@
+.admin-page {
+  padding: 20px 16px 80px;
+  min-height: 100vh;
+  background: var(--tg-theme-bg-color, #fef7f0);
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.admin-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Статус CRM/LMS */
+.status-section {
+  background: var(--tg-theme-bg-color, #ffffff);
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.status-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.status-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.status-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--tg-theme-bg-color, #fef7f0);
+  border-radius: 8px;
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+}
+
+.status-icon {
+  font-size: 20px;
+}
+
+.status-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.status-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-item .label {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+}
+
+.detail-item .value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+/* Настройка интеграции */
+.config-section {
+  background: var(--tg-theme-bg-color, #ffffff);
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.config-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px;
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--tg-theme-bg-color, #ffffff);
+  color: var(--tg-theme-text-color, #2c1810);
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--tg-theme-button-color, #8b2635);
+}
+
+.form-group input::placeholder {
+  color: var(--tg-theme-hint-color, #8b6f47);
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* Управление синхронизацией */
+.sync-section {
+  background: var(--tg-theme-bg-color, #ffffff);
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.sync-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: var(--tg-theme-text-color, #2c1810);
+}
+
+.sync-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Кнопки */
+.action-button {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 120px;
+}
+
+.action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-button.primary {
+  background: var(--tg-theme-button-color, #8b2635);
+  color: var(--tg-theme-button-text-color, #ffffff);
+}
+
+.action-button.primary:hover:not(:disabled) {
+  background: var(--tg-theme-button-color, #7a1f2a);
+  transform: translateY(-1px);
+}
+
+.action-button.success {
+  background: #28a745;
+  color: #ffffff;
+}
+
+.action-button.success:hover:not(:disabled) {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.action-button.warning {
+  background: #ffc107;
+  color: #212529;
+}
+
+.action-button.warning:hover:not(:disabled) {
+  background: #e0a800;
+  transform: translateY(-1px);
+}
+
+.action-button:not(.primary):not(.success):not(.warning) {
+  background: var(--tg-theme-bg-color, #fef7f0);
+  color: var(--tg-theme-text-color, #2c1810);
+  border: 1px solid var(--tg-theme-hint-color, #e8d5c4);
+}
+
+.action-button:not(.primary):not(.success):not(.warning):hover:not(:disabled) {
+  background: var(--tg-theme-hint-color, #e8d5c4);
+  transform: translateY(-1px);
+}
+
+/* Сообщения */
+.message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 16px;
+}
+
+.message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Состояния загрузки */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--tg-theme-hint-color, #8b6f47);
+  font-size: 14px;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .admin-page {
+    padding: 16px 12px 80px;
+  }
+  
+  .header h1 {
+    font-size: 20px;
+  }
+  
+  .status-section,
+  .config-section,
+  .sync-section {
+    padding: 16px;
+  }
+  
+  .form-actions,
+  .sync-actions {
+    flex-direction: column;
+  }
+  
+  .action-button {
+    min-width: auto;
+  }
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+  .admin-page {
+    background: var(--tg-theme-bg-color, #2c1810);
+  }
+  
+  .status-section,
+  .config-section,
+  .sync-section {
+    background: var(--tg-theme-bg-color, #3d2418);
+    border-color: var(--tg-theme-hint-color, #4a2c1a);
+  }
+  
+  .status-header {
+    background: var(--tg-theme-bg-color, #2c1810);
+    border-color: var(--tg-theme-hint-color, #4a2c1a);
+  }
+  
+  .form-group input,
+  .form-group select {
+    background: var(--tg-theme-bg-color, #3d2418);
+    border-color: var(--tg-theme-hint-color, #4a2c1a);
+    color: var(--tg-theme-text-color, #fef7f0);
+  }
+  
+  .action-button:not(.primary):not(.success):not(.warning) {
+    background: var(--tg-theme-bg-color, #2c1810);
+    border-color: var(--tg-theme-hint-color, #4a2c1a);
+    color: var(--tg-theme-text-color, #fef7f0);
+  }
+} 
