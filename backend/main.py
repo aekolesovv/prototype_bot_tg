@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes_db import router
+from .routes_secure import router
 from db.init_db import init_db, create_sample_data
 
 app = FastAPI(
@@ -42,11 +42,12 @@ def root():
         'message': 'Welcome to English School API',
         'version': '1.0.0',
         'endpoints': {
-            'schedule': '/schedule',
-            'profile': '/profile',
-            'clubs': '/clubs',
-            'tests': '/tests',
-            'lessons': '/lessons'
+            'auth': '/api/v1/auth/login',
+            'schedule': '/api/v1/schedule',
+            'profile': '/api/v1/profile',
+            'clubs': '/api/v1/clubs',
+            'tests': '/api/v1/tests',
+            'lessons': '/api/v1/lessons'
         }
     }
 

@@ -6,7 +6,11 @@
 import os
 import sys
 import asyncio
+from dotenv import load_dotenv
 from bot.bot import main
+
+# Загружаем переменные из .env файла
+load_dotenv()
 
 def check_environment():
     """Проверка окружения"""

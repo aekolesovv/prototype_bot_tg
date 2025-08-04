@@ -5,8 +5,12 @@ import asyncio
 import os
 import aiohttp
 import json
+from dotenv import load_dotenv
 from .notification_service import NotificationService
 from db.repositories import UserRepository
+
+# Загружаем переменные из .env файла
+load_dotenv()
 
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', 'YOUR_BOT_TOKEN_HERE')
 BACKEND_URL = os.getenv('BACKEND_URL', 'http://localhost:8000/api/v1')
@@ -29,7 +33,7 @@ def get_level_keyboard():
 def get_main_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text='Открыть мини-приложение', web_app=WebAppInfo(url='https://your-webapp-url.com'))],
+            [KeyboardButton(text='Открыть мини-приложение', web_app=WebAppInfo(url='http://localhost:3000'))],
             [KeyboardButton(text='Связаться с куратором / преподавателем')],
             [KeyboardButton(text='Информация о курсах и школе')],
             [KeyboardButton(text='Изменить уровень обучения')],
@@ -378,8 +382,9 @@ async def main():
         # Запускаем сервис уведомлений в фоне
         notification_task = asyncio.create_task(notification_service.start())
         
-        # Запускаем бота
-        await dp.start_polling(bot)
+        # Запускаем бота с явным указанием параметров
+        print("🤖 Бот запущен и готов к работе!")
+        await dp.start_polling(bot, skip_updates=True)
     except KeyboardInterrupt:
         print("Остановка бота...")
     finally:

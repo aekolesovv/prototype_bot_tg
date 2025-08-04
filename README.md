@@ -27,8 +27,19 @@ pip install -r requirements.txt
 ### 2. Настройка Telegram-бота
 
 1. Создайте бота через [@BotFather](https://t.me/BotFather)
-2. Получите токен и установите переменную окружения:
+2. Получите токен и настройте переменные окружения:
 
+**Способ 1: Через файл .env (рекомендуется)**
+```bash
+# Скопируйте шаблон
+cp .env.example .env
+
+# Отредактируйте файл .env и добавьте ваш токен
+TELEGRAM_BOT_TOKEN=your_bot_token_here
+BACKEND_URL=http://localhost:8000/api/v1
+```
+
+**Способ 2: Через переменную окружения**
 ```bash
 export TELEGRAM_BOT_TOKEN="your_bot_token_here"
 ```

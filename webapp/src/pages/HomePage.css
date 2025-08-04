@@ -225,13 +225,13 @@
 /* Темная тема */
 @media (prefers-color-scheme: dark) {
   .home-page {
-    background: var(--tg-theme-bg-color, #2c1810);
+    background: var(--tg-theme-bg-color, #ea5014);
   }
   
   .progress-card,
   .action-card,
   .feature-item {
-    background: var(--tg-theme-bg-color, #3d2418);
+    background: var(--tg-theme-bg-color, #bf4219);
     border-color: var(--tg-theme-hint-color, #4a2c1a);
   }
 } 
